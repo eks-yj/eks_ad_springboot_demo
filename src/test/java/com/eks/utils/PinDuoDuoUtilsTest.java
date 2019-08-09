@@ -1,4 +1,4 @@
-package com.eks.thread;
+package com.eks.utils;
 
 import com.eks.utils.SeleniumUtils;
 import org.junit.Test;
