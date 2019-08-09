@@ -44,4 +44,10 @@ public class ClipboardUtilsTest {
 
         RobotUtils.pressKey(500, true,KeyEvent.VK_ENTER);
     }
+    @Test
+    public void test4() {
+        ClipboardUtils.setClipboardText("测试\n测试");
+        RobotUtils.clickMouse(500,500, -1149, 563);
+        RobotUtils.pressKey(500, false, KeyEvent.VK_CONTROL,KeyEvent.VK_V);
+    }
 }

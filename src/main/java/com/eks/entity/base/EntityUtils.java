@@ -16,7 +16,8 @@ import java.util.Date;
 public class EntityUtils {
     //id, gmt_create, gmt_modified
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", unique = true, nullable = false)
     public Integer id;//注意,
     //必备的三个字段,需要给入口加@EnableJpaAuditing及使用new SpringApplicationBuilder(Main.class).web(true).run(args);
     @CreatedDate
