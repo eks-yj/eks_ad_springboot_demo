@@ -28,7 +28,7 @@ public class PinDuoDuoNormalTest {
         SeleniumUtils.clickByJs(webDriver,".animation.button");
         Thread.sleep(15000);
     }
-    public static void setIntroductionAndUrl(WebDriver webDriver, WebElement btnWebElement, PinDuoDuo pinDuoDuo){
+    private static void setIntroductionAndUrl(WebDriver webDriver, WebElement btnWebElement, PinDuoDuo pinDuoDuo){
         try {
             //单击立即推广
             SeleniumUtils.clickByJs(webDriver, btnWebElement,2000);

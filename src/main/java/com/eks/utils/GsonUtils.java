@@ -160,4 +160,7 @@ public class GsonUtils {
         }
         return string;
     }
+    public static <T> T convertJsonStringToT(String jsonString,Class<T> clazz){
+        return GSON.fromJson(jsonString,clazz);
+    }
 }
