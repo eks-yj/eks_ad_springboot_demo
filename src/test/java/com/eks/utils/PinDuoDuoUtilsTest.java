@@ -1,6 +1,5 @@
 package com.eks.utils;
 
-import com.eks.utils.SeleniumUtils;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,7 +10,7 @@ import java.util.List;
 
 public class PinDuoDuoUtilsTest {
     @Test
-    public void test1() throws InterruptedException, IOException, UnsupportedFlavorException {
+    public void test1() throws InterruptedException{
         WebDriver webDriver = SeleniumUtils.getWebDriver();
         String urlString = "https://jinbao.pinduoduo.com/promotion/single-promotion";
         String cookieFileNameString = SeleniumUtils.loginByCookie(webDriver, urlString);
