@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Table;
@@ -17,7 +18,13 @@ import javax.persistence.Table;
 @Table(name = "tbl_pin_duo_duo")
 @EntityListeners(AuditingEntityListener.class)//将表中数据的创建时间、修改时间交给spring
 public class PinDuoDuo extends EntityUtils{
-    private String goodsIdString;
-    private String weChatLongUrlString;
-    private String miniProgramImageUrlString;
+    @Column(name = "goods_id", unique = true, nullable = false)
+    private String goodsId;
+    private String goodsIntroduction;
+    private String goodsOriginalPrice;
+    private String goodsDiscountPrice;
+    private String goodsEarnMoney;
+    private String goodsEarnRatio;
+    private String shortUrlString;
+    private String miniProgramImageUrl;
 }

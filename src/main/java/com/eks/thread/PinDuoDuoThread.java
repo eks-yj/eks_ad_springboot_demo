@@ -43,7 +43,7 @@ public class PinDuoDuoThread implements Callable<List<PinDuoDuo>>{
                     String hrefString = webElement.getAttribute("href");
                     String[] hrefStringArray = hrefString.split("=");
                     String goodsIdString = hrefStringArray[hrefStringArray.length - 1];
-                    pinDuoDuo.setGoodsIdString(goodsIdString);
+                    pinDuoDuo.setGoodsId(goodsIdString);
 
                     //立即推广
                     WebElement btnWebElement = SeleniumUtils.findElement(webElement, "div > div > div.goods-info > div.sale-info > div.btn");
@@ -53,16 +53,13 @@ public class PinDuoDuoThread implements Callable<List<PinDuoDuo>>{
                     webDriverWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper.main-content > div.pid-modal-wrapper > div > div.content > div.btn-wrapper > div:nth-child(1)")));
                     SeleniumUtils.click(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper.main-content > div.pid-modal-wrapper > div > div.content > div.btn-wrapper > div:nth-child(1)");
                     Thread.sleep(1000);
-                    //长链接
-                    String weChatLongUrlString = SeleniumUtils.getAttribute(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper.main-content > div.share-info-wrapper > div > div > div.copy-wrapper > div > div > p.weChatLongUrl", "innerHTML");
-                    pinDuoDuo.setWeChatLongUrlString(weChatLongUrlString);
                     //小程序
                     SeleniumUtils.click(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper.main-content > div.share-info-wrapper > div > div > div.tab > ul:nth-child(1) > li:nth-child(5)");
                     Thread.sleep(3000);
                     webDriverWait = new WebDriverWait(webDriver, 5);
                     webDriverWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper.main-content > div.share-info-wrapper > div > div > div.copy-wrapper > div > img")));
                     String miniProgramImageUrlString = SeleniumUtils.getAttribute(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper.main-content > div.share-info-wrapper > div > div > div.copy-wrapper > div > img", "src");
-                    pinDuoDuo.setMiniProgramImageUrlString(miniProgramImageUrlString);
+                    pinDuoDuo.setMiniProgramImageUrl(miniProgramImageUrlString);
                     //取消
                     SeleniumUtils.click(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper.main-content > div.share-info-wrapper > div > div > div.btn-wrapper > div:nth-child(2)");
                     Thread.sleep(1000);

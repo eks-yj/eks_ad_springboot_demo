@@ -15,7 +15,7 @@ import java.util.Set;
 public class SeleniumUtils {
     private static String basalCookieSetPathString = null;
     static {
-        String filePathString = FileUtils.generatePathBaseProjectPath("extra/driver/chromedriver_win32/chromedriver.exe");
+        String filePathString = FileUtils.generatePathBaseProjectPath("extra/driver/chromedriver_win32/76_0_3809_68/chromedriver.exe");
         System.setProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY,filePathString);
         basalCookieSetPathString = FileUtils.generatePathBaseProjectPath("extra/cookie/");
     }
@@ -39,8 +39,7 @@ public class SeleniumUtils {
         WebDriver.Window window = options.window();
         window.maximize();
         webDriver.get(urlString);
-        String[] urlSplitStringArray = urlString.split("\\.");
-        String cookieFileNameString = urlSplitStringArray[1];
+        String cookieFileNameString = getCompanyName(urlString);
         Set<Cookie> cookieSet = SerializeUtils.readObject(basalCookieSetPathString + cookieFileNameString);
         if (cookieSet != null && cookieSet.size() > 0){
             for(Cookie cookie : cookieSet){
@@ -50,6 +49,10 @@ public class SeleniumUtils {
         WebDriver.Navigation navigation = webDriver.navigate();
         navigation.refresh();
         return cookieFileNameString;
+    }
+    public static String getCompanyName(String urlString){
+        String[] urlSplitStringArray = urlString.split("\\.");
+        return urlSplitStringArray[1];
     }
     public static Boolean checkLogin(WebDriver webDriver,long timeOutInSeconds,String cssSelectorString) {
         try {
@@ -71,6 +74,22 @@ public class SeleniumUtils {
     public static void sendKeys(WebDriver webDriver,String cssSelectorString,String contentString){
         WebElement webElement = findElement(webDriver,cssSelectorString);
         webElement.sendKeys(contentString);
+    }
+    public static void clickByJs(WebDriver webDriver,WebElement webElement,long sleepMillisLong) throws InterruptedException {
+        clickByJs(webDriver,webElement);
+        Thread.sleep(sleepMillisLong);
+    }
+    public static void clickByJs(WebDriver webDriver,WebElement webElement){
+        JavascriptExecutor javascriptExecutor = (JavascriptExecutor)webDriver;
+        javascriptExecutor.executeScript("arguments[0].click()",webElement);
+    }
+    public static void clickByJs(WebDriver webDriver,String cssSelectorString,long sleepMillisLong) throws InterruptedException {
+        clickByJs(webDriver,cssSelectorString);
+        Thread.sleep(sleepMillisLong);
+    }
+    public static void clickByJs(WebDriver webDriver,String cssSelectorString){
+        WebElement webElement = findElement(webDriver,cssSelectorString);
+        clickByJs(webDriver,webElement);
     }
     public static void click(WebDriver webDriver,WebElement webElement){
         click(webDriver,webElement,null,null);
@@ -107,7 +126,10 @@ public class SeleniumUtils {
         return searchContext.findElements(By.cssSelector(cssSelectorString));
     }
     public static String getAttribute(SearchContext searchContext,String cssSelectorString,String attributeString){
-        WebElement webElement = findElement(searchContext,cssSelectorString);
+        WebElement webElement = findElement(searchContext, cssSelectorString);
         return webElement.getAttribute(attributeString);
+    }
+    public static String getContent(SearchContext searchContext,String cssSelectorString){
+        return getAttribute(searchContext,cssSelectorString,"innerHTML");
     }
 }
