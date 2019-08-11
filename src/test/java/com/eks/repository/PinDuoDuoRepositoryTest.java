@@ -18,7 +18,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,7 +44,7 @@ public class PinDuoDuoRepositoryTest {
     }
     @Test
     public void test2() throws Exception {
-        String filePathString = FileUtils.generatePathBaseProjectPath("extra/json/20190811_0749_PinDuoDuo");
+        String filePathString = FileUtils.generatePathBaseProjectPath("extra/json/20190811_1826_PinDuoDuo_辣条_233_292");
         String contentString = FileUtils.convertFileToContentString(filePathString);
         JsonArray jsonArray = GsonUtils.convertJsonStringToJsonElement(contentString).getAsJsonArray();
         for(JsonElement jsonElement : jsonArray){
@@ -79,9 +78,23 @@ public class PinDuoDuoRepositoryTest {
 
                 String shortUrlString = pinDuoDuo.getShortUrlString();
                 String miniProgramImageUrlString = pinDuoDuo.getMiniProgramImageUrl();
-                StringBuilder stringBuilder = new StringBuilder("[玫瑰][玫瑰][玫瑰]");
                 Random random = new Random();
                 int randomInt = random.nextInt(5);
+                StringBuilder stringBuilder = new StringBuilder();
+                if (233 <= pinDuoDuo.getId() && pinDuoDuo.getId() <= 292){
+                    stringBuilder.append("[玫瑰][玫瑰][玫瑰]");
+                    stringBuilder.append("大品牌辣条推荐,超好吃");
+                    stringBuilder.append("\n");
+                }
+                if (randomInt == 0){
+                    stringBuilder.append("[玫瑰][玫瑰][玫瑰]");
+                }else if (randomInt == 1){
+                    stringBuilder.append("[红包][红包][红包]");
+                }else if (randomInt == 2){
+                    stringBuilder.append("[爱心][爱心][爱心]");
+                }else {
+                    stringBuilder.append("恭喜发财!");
+                }
                 stringBuilder.append("【");
                 if (randomInt == 0){
                     stringBuilder.append("促销最后倒计时");
@@ -102,7 +115,13 @@ public class PinDuoDuoRepositoryTest {
                     stringBuilder.append(goodsOriginalPriceDouble);
                 }else{
                     stringBuilder.append("劲省");
-                    stringBuilder.append(goodsOriginalPriceDouble - goodsDiscountPriceDouble);
+                    Double moneyDouble = goodsOriginalPriceDouble - goodsDiscountPriceDouble;
+                    int moneyInt = moneyDouble.intValue();
+                    if(moneyDouble > moneyInt){
+                        stringBuilder.append(goodsOriginalPriceDouble - goodsDiscountPriceDouble);
+                    }else {
+                        stringBuilder.append(moneyInt);
+                    }
                 }
                 stringBuilder.append("元】");
                 stringBuilder.append("\n");
@@ -129,6 +148,11 @@ public class PinDuoDuoRepositoryTest {
                 stringBuilder.append("【购买方式二】点击下图并长按前往小程序");
                 String contentString = stringBuilder.toString();
                 Image image = ImageIO.read(new URL(miniProgramImageUrlString));
+                if (image == null){
+                    Thread.sleep(2000);
+                    image = ImageIO.read(new URL(miniProgramImageUrlString));
+                    Thread.sleep(2000);
+                }
                 for(WeChatPoint weChatPoint : weChatPointList){
                     try {
                         sendAdToWeChat(weChatPoint.getXInteger(), weChatPoint.getYInteger(), contentString, image);
@@ -151,13 +175,13 @@ public class PinDuoDuoRepositoryTest {
     public static String getUrl(String string){
         return string.substring("商品链接:".length(),string.length());
     }
-    public static void sendAdToWeChat(Integer xInteger,Integer yInteger,String contentString,Image image) throws InterruptedException, IOException {
+    public static void sendAdToWeChat(Integer xInteger,Integer yInteger,String contentString,Image image) throws InterruptedException {
         Thread.sleep(2000);
         ClipboardUtils.setClipboardText(contentString);
         RobotUtils.clickMouse(500,500, xInteger, yInteger);
         RobotUtils.pressKey(500, false, KeyEvent.VK_CONTROL,KeyEvent.VK_V);
         RobotUtils.pressKey(500, true,KeyEvent.VK_ENTER);
-        Thread.sleep(2000);
+        Thread.sleep(3000);
         ClipboardUtils.setClipboardImage(image);
         RobotUtils.pressKey(500, false, KeyEvent.VK_CONTROL,KeyEvent.VK_V);
         RobotUtils.pressKey(500, false, KeyEvent.VK_ENTER);
@@ -175,6 +199,6 @@ public class PinDuoDuoRepositoryTest {
         weChatPointList.add(new WeChatPoint(2529,625));
         weChatPointList.add(new WeChatPoint(2941,625));
         weChatPointList.add(new WeChatPoint(3233,625));
-        this.sendAd(weChatPointList,80,120);
+        this.sendAd(weChatPointList,233,292);
     }
 }
