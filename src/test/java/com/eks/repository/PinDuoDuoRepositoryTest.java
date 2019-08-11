@@ -23,6 +23,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -44,7 +45,7 @@ public class PinDuoDuoRepositoryTest {
     }
     @Test
     public void test2() throws Exception {
-        String filePathString = FileUtils.generatePathBaseProjectPath("extra/json/20190810_1441_PinDuoDuo");
+        String filePathString = FileUtils.generatePathBaseProjectPath("extra/json/20190811_0749_PinDuoDuo");
         String contentString = FileUtils.convertFileToContentString(filePathString);
         JsonArray jsonArray = GsonUtils.convertJsonStringToJsonElement(contentString).getAsJsonArray();
         for(JsonElement jsonElement : jsonArray){
@@ -58,12 +59,12 @@ public class PinDuoDuoRepositoryTest {
             }
         }
     }
-    public void sendAd(List<WeChatPoint> weChatPointList, int startId){
+    public void sendAd(List<WeChatPoint> weChatPointList, int startId,int endId){
         int i = startId;
         while (true){
             try {
                 PinDuoDuo pinDuoDuo = pinDuoDuoRepository.findOneByIdAndIsDeleted(i, 0);
-                if (i < 60){
+                if (i < endId){
                     i = i + 1;
                 }else{
                     i = 1;
@@ -78,17 +79,32 @@ public class PinDuoDuoRepositoryTest {
 
                 String shortUrlString = pinDuoDuo.getShortUrlString();
                 String miniProgramImageUrlString = pinDuoDuo.getMiniProgramImageUrl();
-                StringBuilder stringBuilder = new StringBuilder("[玫瑰][玫瑰][玫瑰]【加我为好友进特惠群】");
+                StringBuilder stringBuilder = new StringBuilder("[玫瑰][玫瑰][玫瑰]");
+                Random random = new Random();
+                int randomInt = random.nextInt(5);
+                stringBuilder.append("【");
+                if (randomInt == 0){
+                    stringBuilder.append("促销最后倒计时");
+                }else if (randomInt == 1){
+                    stringBuilder.append("特惠商品手慢则无");
+                }else if (randomInt == 2){
+                    stringBuilder.append("官方品牌大促销");
+                }else{
+                    stringBuilder.append("爆款产品限时特惠");
+                }
+                stringBuilder.append("】");
+                stringBuilder.append("\n");
+                stringBuilder.append("【");
                 boolean samePriceBoolean = false;
                 if (goodsOriginalPriceDouble.compareTo(goodsDiscountPriceDouble) == 0){
                     samePriceBoolean = true;
-                    stringBuilder.append("活动特价:");
+                    stringBuilder.append("【活动特价:");
                     stringBuilder.append(goodsOriginalPriceDouble);
                 }else{
                     stringBuilder.append("劲省");
                     stringBuilder.append(goodsOriginalPriceDouble - goodsDiscountPriceDouble);
                 }
-                stringBuilder.append("元");
+                stringBuilder.append("元】");
                 stringBuilder.append("\n");
                 stringBuilder.append(goodsIntroductionString);
                 stringBuilder.append("\n");
@@ -159,6 +175,6 @@ public class PinDuoDuoRepositoryTest {
         weChatPointList.add(new WeChatPoint(2529,625));
         weChatPointList.add(new WeChatPoint(2941,625));
         weChatPointList.add(new WeChatPoint(3233,625));
-        this.sendAd(weChatPointList,40);
+        this.sendAd(weChatPointList,80,120);
     }
 }
