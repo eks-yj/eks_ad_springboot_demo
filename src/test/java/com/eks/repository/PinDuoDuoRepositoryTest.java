@@ -44,7 +44,7 @@ public class PinDuoDuoRepositoryTest {
     }
     @Test
     public void test2() throws Exception {
-        String filePathString = FileUtils.generatePathBaseProjectPath("extra/json/20190811_1826_PinDuoDuo_辣条_233_292");
+        String filePathString = FileUtils.generatePathBaseProjectPath("extra/json/20190811_1826_PinDuoDuo_辣条_233_292.json");
         String contentString = FileUtils.convertFileToContentString(filePathString);
         JsonArray jsonArray = GsonUtils.convertJsonStringToJsonElement(contentString).getAsJsonArray();
         for(JsonElement jsonElement : jsonArray){
