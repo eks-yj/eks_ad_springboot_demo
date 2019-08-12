@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import org.junit.Test;
 
 import java.awt.event.KeyEvent;
+import java.util.Calendar;
 import java.util.Random;
 
 public class PinDuoDuoNormalTest {
@@ -46,24 +47,34 @@ public class PinDuoDuoNormalTest {
                 ClipboardUtils.setClipboardText(contentString);
                 Thread.sleep(2000);
                 //文本框
-                RobotUtils.clickMouse(500,500, 1456, 486);
+                RobotUtils.clickMouse(500,500, 1322, 230);
                 RobotUtils.pressKey(500, false, KeyEvent.VK_CONTROL,KeyEvent.VK_A);
                 RobotUtils.pressKey(500, false, KeyEvent.VK_CONTROL,KeyEvent.VK_V);
+                RobotUtils.clickMouse(500,500, 1322, 230);
                 RobotUtils.pressKey(500, false, KeyEvent.VK_CONTROL,KeyEvent.VK_A);
                 RobotUtils.pressKey(500, false, KeyEvent.VK_CONTROL,KeyEvent.VK_C);
                 Thread.sleep(2000);
                 //用户头像
-                RobotUtils.clickMouse(500,500, 2028, 256);
+                RobotUtils.clickMouse(500,500, 109, 258);
                 Thread.sleep(2000);
                 //输入框
-                RobotUtils.clickMouse(500,500, 2584, 544);
+                RobotUtils.clickMouse(500,500, 504, 627);
                 Thread.sleep(2000);
                 RobotUtils.pressKey(500, false, KeyEvent.VK_CONTROL,KeyEvent.VK_V);
                 RobotUtils.pressKey(500, true,KeyEvent.VK_ENTER);
                 Thread.sleep(2000);
                 //关闭当前会话
-//                RobotUtils.clickMouse(1000,1000, 2137, 255);
-                Thread.sleep(1000 * 60 * 3);
+                RobotUtils.clickMouse(1000,1000, 211, 256);
+                Thread.sleep(2000);
+                Calendar calendar = Calendar.getInstance();
+                int hourInt = calendar.get(Calendar.HOUR_OF_DAY);
+                int minuteInt = calendar.get(Calendar.MINUTE);
+                int timeInt = hourInt * 100 + minuteInt;
+                if (630 < timeInt && timeInt < 2330){
+                    Thread.sleep(1000 * 30);
+                    continue;
+                }
+                Thread.sleep(1000 * 60 * 10);
             }catch (Exception e){
                 e.printStackTrace();
             }
