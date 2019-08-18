@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import java.awt.event.KeyEvent;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 public class PinDuoDuoNormalTest {
@@ -66,18 +67,23 @@ public class PinDuoDuoNormalTest {
                 //关闭当前会话
                 RobotUtils.clickMouse(1000,1000, 211, 256);
                 Thread.sleep(2000);
-                Calendar calendar = Calendar.getInstance();
-                int hourInt = calendar.get(Calendar.HOUR_OF_DAY);
-                int minuteInt = calendar.get(Calendar.MINUTE);
-                int timeInt = hourInt * 100 + minuteInt;
-                if (630 < timeInt && timeInt < 2330){
-                    Thread.sleep(1000 * 30);
-                    continue;
-                }
-                Thread.sleep(1000 * 60 * 10);
+                inSuitableTime();
+                Thread.sleep(1000 * 30);
             }catch (Exception e){
                 e.printStackTrace();
             }
+        }
+    }
+    private static void inSuitableTime() throws InterruptedException {
+        Calendar calendar = Calendar.getInstance();
+        int hourInt = calendar.get(Calendar.HOUR_OF_DAY);
+        int minuteInt = calendar.get(Calendar.MINUTE);
+        int timeInt = hourInt * 100 + minuteInt;
+        if (630 < timeInt && timeInt < 2330){
+            System.out.println(new Date());
+        }else{
+            Thread.sleep(1000 * 60 * 10);
+            inSuitableTime();
         }
     }
 }

@@ -33,23 +33,23 @@ public class PinDuoDuoNormalTest {
             //单击立即推广
             SeleniumUtils.clickByJs(webDriver, btnWebElement,2000);
             //单击确定
-            SeleniumUtils.clickByJs(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper.main-content > div.pid-modal-wrapper > div > div.content > div.btn-wrapper > div:nth-child(1)",2000);
+            SeleniumUtils.clickByJs(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper > div:nth-child(2) > div.pid-modal-wrapper > div > div.content > div.btn-wrapper > div:nth-child(1)",2000);
             //商品介绍
-            String goodsIntroductionString  = SeleniumUtils.getContent(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper.main-content > div.share-info-wrapper > div > div > div.copy-wrapper > div > div > div > p:nth-child(1)");
+            String goodsIntroductionString  = SeleniumUtils.getContent(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper > div:nth-child(2) > div.share-info-wrapper > div > div > div.copy-wrapper > div > div > div > p:nth-child(1)");
             pinDuoDuo.setGoodsIntroduction(goodsIntroductionString);
             Thread.sleep(1000);
             //短链接
-            String shortUrlString = SeleniumUtils.getContent(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper.main-content > div.share-info-wrapper > div > div > div.copy-wrapper > div > div > p.shortUrl");
+            String shortUrlString = SeleniumUtils.getContent(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper > div:nth-child(2) > div.share-info-wrapper > div > div > div.copy-wrapper > div > div > p.shortUrl");
             pinDuoDuo.setShortUrlString(shortUrlString);
             Thread.sleep(1000);
             //点击小程序标题
-            SeleniumUtils.clickByJs(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper.main-content > div.share-info-wrapper > div > div > div.tab > ul:nth-child(1) > li:nth-child(5)",5000);
-            String miniProgramImageUrlString = SeleniumUtils.getAttribute(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper.main-content > div.share-info-wrapper > div > div > div.copy-wrapper > div > img","src");
+            SeleniumUtils.clickByJs(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper > div:nth-child(2) > div.share-info-wrapper > div > div > div.tab > ul:nth-child(1) > li:nth-child(5)",5000);
             //小程序图片链接
+            String miniProgramImageUrlString = SeleniumUtils.getAttribute(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper > div:nth-child(2) > div.share-info-wrapper > div > div > div.copy-wrapper > div > img","src");
             pinDuoDuo.setMiniProgramImageUrl(miniProgramImageUrlString);
             Thread.sleep(1000);
             //点击取消
-            SeleniumUtils.clickByJs(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper.main-content > div.share-info-wrapper > div > div > div.btn-wrapper > div:nth-child(2)",10000);
+            SeleniumUtils.clickByJs(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper > div:nth-child(2) > div.share-info-wrapper > div > div > div.btn-wrapper > div:nth-child(2)",10000);
             System.out.println(GsonUtils.convertObjectToJsonString(pinDuoDuo));
         }catch (Exception e){
             e.printStackTrace();
@@ -58,7 +58,7 @@ public class PinDuoDuoNormalTest {
     @Test
     public void test1() {
         //a标签
-        List<WebElement> aWebElementList = SeleniumUtils.findElements(webDriver, "#__next > div.jsx-1070787851.container > main > div.single-promotion-wrapper.main-content > div.single-promotion-list > a");
+        List<WebElement> aWebElementList = SeleniumUtils.findElements(webDriver, ".single-promotion-list > a");
         List<PinDuoDuo> pinDuoDuoList = new ArrayList<>();
         for(WebElement webElement : aWebElementList){
             PinDuoDuo pinDuoDuo = new PinDuoDuo();
